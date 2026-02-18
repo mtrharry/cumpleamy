@@ -8,7 +8,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
 </head>
 <body>
+<div id="tapa-invitacion" class="tapa-overlay">
+    <div class="carta-frente">
+        <h1>¡Tienes una Invitación!</h1>
+        <p>Para: Un pequeño gran explorador</p>
+        <p class="click-hint">(Toca el sobre para abrir)</p>
+    </div>
+</div>
 <div class="fondo">
+
   <div class="cielo">
     
     <div class="nube-container">
@@ -137,5 +145,15 @@
 </div>
 
 <script src="script.js"></script>
+<audio id="musica-fondo" loop>
+    <source src="musica.mp3" type="audio/mpeg">
+</audio>
+
+<button id="btn-musica" class="btn-flotante-musica">
+    🎵
+</button>
+
+<script src="script.js"></script>
+
 </body>
 </html>

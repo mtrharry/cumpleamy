@@ -3,6 +3,98 @@
   padding: 0;
   box-sizing: border-box;
 }
+/* --- TAPA INICIAL (SOBRE) --- */
+/* --- TAPA INICIAL (SOBRE CORREGIDO) --- */
+.tapa-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    /* CAMBIO CLAVE: Usamos un color SÓLIDO. */
+    /* Ya no se verá nada hacia atrás. Usamos el azul del tema */
+    background-color: #2da6c4; 
+    z-index: 9999; /* Siempre encima de todo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Efecto rebote al abrir */
+}
+
+/* El diseño de la carta/sobre MEJORADO */
+.carta-frente {
+    background-color: #f7f4ee; /* Color papel */
+    width: 90%;
+    max-width: 380px;
+    padding: 60px 30px; /* Más espacio interno */
+    border-radius: 10px;
+    text-align: center;
+    position: relative; /* Necesario para el sello */
+    
+    /* Bordes estilo sobre */
+    border: 8px solid white;
+    outline: 3px dashed #2da6c4; /* Doble borde para efecto "cosido" */
+    box-shadow: 0 25px 50px rgba(0,0,0,0.4); /* Sombra profunda */
+    
+    cursor: pointer;
+    animation: flotarSobre 3s ease-in-out infinite;
+}
+
+/* AGREGAMOS UN "SELLO" DE DINOSAURIO */
+.carta-frente::before {
+    content: '🦖'; /* Emoji de dino como lacre/sello */
+    font-size: 60px;
+    position: absolute;
+    top: -35px; /* Lo colocamos en el borde superior */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f7f4ee;
+    padding: 5px;
+    border-radius: 50%;
+    border: 3px dashed #2da6c4;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+
+/* Tipografía del sobre */
+.carta-frente h1 { 
+    color: #ff6b6b; 
+    font-size: 2em; 
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.carta-frente p { 
+    color: #5d4037; 
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+.click-hint { 
+    font-size: 1em !important; 
+    color: #2da6c4 !important; 
+    margin-top: 30px !important;
+    font-weight: bold;
+    text-transform: uppercase;
+    animation: parpadeo 1.5s infinite;
+}
+
+/* Clase para esconder el sobre al hacer click */
+.tapa-overlay.abierto {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-120%) rotate(-5deg); /* Sale volando hacia arriba y de lado */
+}
+
+/* Animaciones */
+@keyframes flotarSobre {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(1deg); }
+}
+
+@keyframes parpadeo {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
 
 body {
   height: 100vh;
@@ -490,4 +582,36 @@ a.btn-confirmar, a.btn-ubicacion {
     transform: scale(1.5); /* Plantas grandes en PC */
     bottom: -30px; /* Bajamos las plantas en PC */
   }
+}/* --- BOTÓN DE MÚSICA FLOTANTE --- */
+.btn-flotante-musica {
+    position: fixed;
+    bottom: 20px;
+    right: 20px; /* Esquina inferior derecha */
+    width: 50px;
+    height: 50px;
+    background-color: #fff;
+    border: 2px solid #2da6c4;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    z-index: 1000; /* Para que esté siempre encima de todo */
+    transition: transform 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-flotante-musica:active {
+    transform: scale(0.9);
+}
+
+.music-playing {
+    animation: girarDisco 3s linear infinite;
+    background-color: #e0f7fa;
+}
+
+@keyframes girarDisco {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }

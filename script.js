@@ -1,4 +1,36 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+    // ==========================================
+    // 0. TAPA INICIAL (NUEVO)
+    // ==========================================
+    const tapa = document.getElementById('tapa-invitacion');
+    // Necesitamos acceso a los elementos de música aquí
+    const audioJs = document.getElementById("musica-fondo");
+    const btnMusicaJs = document.getElementById("btn-musica");
+
+    if(tapa) {
+        tapa.addEventListener('click', () => {
+            // 1. Añadir clase CSS para iniciar la animación de "abrir"
+            tapa.classList.add('abierto');
+
+            // 2. BONUS: Intentar reproducir música automáticamente al abrir
+            // Como el usuario hizo clic, los navegadores suelen permitirlo.
+            if (audioJs && btnMusicaJs && typeof reproduciendo !== 'undefined' && !reproduciendo) {
+                audioJs.play().then(() => {
+                    reproduciendo = true;
+                    btnMusicaJs.textContent = "🔊";
+                    btnMusicaJs.classList.add("music-playing");
+                }).catch(error => {
+                    // Si falla el autoplay (algunos móviles), no pasa nada, 
+                    // el usuario aún tiene el botón flotante.
+                    console.log("Autoplay bloqueado por el navegador");
+                });
+            }
+        });
+    }
+    // ==========================================
+
+    // ... aquí sigue el resto de tu código (Plantas, Carrusel, etc.) ...
     
     // ==========================================
     // 1. LÓGICA DE LAS PLANTAS JURÁSICAS
@@ -90,7 +122,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // FECHA DEL CUMPLEAÑOS: (Año, Mes-1, Día, Hora, Minutos)
     // Nota: Los meses en JS van de 0 (Enero) a 11 (Diciembre).
     // Para el 21 de Febrero de 2026 a las 15:00:
-    const fechaCumple = new Date(2026, 1, 21, 15, 0, 0).getTime();
+    // FECHA: 21 de Febrero 2026 a las 16:30
+    // (Año, Mes-1, Día, Hora, Minutos) -> Mes 1 es Febrero
+    const fechaCumple = new Date(2026, 1, 21, 16, 30, 0).getTime();
 
     const intervalo = setInterval(() => {
         const ahora = new Date().getTime();
@@ -149,6 +183,31 @@ document.addEventListener("DOMContentLoaded", () => {
                 btn.innerText = "Error, intenta de nuevo";
                 btn.disabled = false;
             });
+        });
+    }
+    // ==========================================
+    // 5. CONTROL DE MÚSICA
+    // ==========================================
+    const audio = document.getElementById("musica-fondo");
+    const btnMusica = document.getElementById("btn-musica");
+    let reproduciendo = false;
+
+    if(btnMusica && audio) {
+        btnMusica.addEventListener('click', () => {
+            if (!reproduciendo) {
+                audio.play().then(() => {
+                    reproduciendo = true;
+                    btnMusica.textContent = "🔊"; // Icono sonando
+                    btnMusica.classList.add("music-playing");
+                }).catch(error => {
+                    console.log("Error al reproducir:", error);
+                });
+            } else {
+                audio.pause();
+                reproduciendo = false;
+                btnMusica.textContent = "🎵"; // Icono pausado
+                btnMusica.classList.remove("music-playing");
+            }
         });
     }
 });
