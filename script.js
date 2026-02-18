@@ -153,30 +153,82 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("cuenta-regresiva").innerHTML = "<h3 style='color:#ff6b6b'>¡Es hoy! ¡Rugidos!</h3>";
         }
     }, 1000);
+   // ==========================================
+    // 4. ENVÍO DE FORMULARIO + RECORDAR DATOS
     // ==========================================
-    // 4. ENVÍO DE FORMULARIO A GOOGLE SHEETS
-    // ==========================================
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbw7CU6QoFuLD36C-vZr0gI9KX4UfErZBTo01mzOII5BbkwtlwRsAhEcZ61N76uMrSwwZQ/exec'; // <--- ¡PEGA TU URL AQUÍ!
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbw7CU6QoFuLD36C-vZr0gI9KX4UfErZBTo01mzOII5BbkwtlwRsAhEcZ61N76uMrSwwZQ/exec'; 
     const form = document.forms['form-confirmacion'];
     const mensajeExito = document.getElementById('mensaje-exito');
+    
+    // Nombre de la llave donde guardaremos los datos
+    const LLAVE_DATOS = 'datos_invitacion_amy_v2';
 
+    // A. FUNCIÓN PARA BLOQUEAR INPUTS
+    function bloquearFormulario() {
+        if(!form) return;
+        
+        // 1. Desactivar todos los campos
+        const elementos = form.querySelectorAll('input, select, button');
+        elementos.forEach(elemento => {
+            elemento.disabled = true; 
+        });
+
+        // 2. Cambiar estilo del botón
+        const btn = form.querySelector('button');
+        if(btn) {
+            btn.innerText = "¡Ya confirmaste tu asistencia! ✅";
+            btn.style.backgroundColor = "#888"; // Gris oscuro
+            btn.style.boxShadow = "none";
+            btn.style.cursor = "default";
+        }
+    }
+
+    // B. VERIFICAR AL CARGAR (Recuperar datos antiguos)
+    const datosGuardados = localStorage.getItem(LLAVE_DATOS);
+    
+    if (datosGuardados) {
+        // 1. Convertimos el texto guardado a objeto real
+        const datos = JSON.parse(datosGuardados);
+
+        // 2. Rellenamos los campos con lo que el usuario escribió antes
+        if(form['Adulto/s Acompañante/s']) form['Adulto/s Acompañante/s'].value = datos.adulto;
+        if(form['Nombre Niño']) form['Nombre Niño'].value = datos.nino;
+        if(form['Telefono']) form['Telefono'].value = datos.telefono;
+
+        // 3. Bloqueamos todo para que no lo editen
+        bloquearFormulario();
+    }
+
+
+    // C. LOGICA DE ENVÍO
     if(form){
         form.addEventListener('submit', e => {
-            e.preventDefault(); // Evita que la página se recargue
+            e.preventDefault();
             
-            // Cambiar texto del botón para dar feedback
             const btn = form.querySelector('button');
             const textoOriginal = btn.innerText;
             btn.innerText = "Enviando...";
             btn.disabled = true;
 
+            // Recopilamos los datos para guardarlos en el navegador
+            const datosUsuario = {
+                adulto: form['Adulto/s Acompañante/s'].value,
+                nino: form['Nombre Niño'].value,
+                telefono: form['Telefono'].value
+            };
+
             fetch(scriptURL, { method: 'POST', body: new FormData(form)})
             .then(response => {
-                // Ocultar formulario y mostrar mensaje
-                form.style.display = 'none';
+                // 1. GUARDAR LOS DATOS EN EL NAVEGADOR (Como texto JSON)
+                localStorage.setItem(LLAVE_DATOS, JSON.stringify(datosUsuario));
+
+                // 2. Mostrar éxito
+                form.style.display = 'none'; // Ocultamos el form momentáneamente para mostrar el msj
                 mensajeExito.style.display = 'block';
-                // Resetear form por si acaso
                 form.reset();
+                
+                // Opcional: Si quieres que al recargar vean el form lleno, 
+                // no hacemos nada más aquí, la magia ocurre al recargar la página.
             })
             .catch(error => {
                 console.error('Error!', error.message);

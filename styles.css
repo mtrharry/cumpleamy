@@ -614,4 +614,52 @@ a.btn-confirmar, a.btn-ubicacion {
 @keyframes girarDisco {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
+}/* --- ESTADO DESACTIVADO (CONFIRMADO) --- */
+/* Cuando los inputs están bloqueados, se ponen grises */
+input:disabled, select:disabled {
+    background-color: #e0e0e0; /* Fondo gris claro */
+    color: #888; /* Texto gris oscuro */
+    cursor: not-allowed; /* Icono de prohibido */
+    border-color: #ccc;
+}
+/* --- SOL ANIMADO --- */
+.sol-animado {
+    position: absolute;
+    top: 30px;    /* Distancia desde arriba */
+    right: 30px;  /* Distancia desde la derecha */
+    width: 80px;  /* Tamaño del sol */
+    height: 80px;
+    /* Un degradado bonito de amarillo claro a anaranjado */
+    background: radial-gradient(circleAt center, #fff700 30%, #ffc107 100%);
+    border-radius: 50%; /* Lo hace redondo */
+    /* Un brillo intenso alrededor */
+    box-shadow: 0 0 25px rgba(255, 247, 0, 0.8), 
+                0 0 50px rgba(255, 193, 7, 0.6);
+    z-index: 1; /* Se queda detrás del papel pero delante de las nubes base */
+    /* La animación de "latido" */
+    animation: resplandorSol 4s ease-in-out infinite alternate;
+}
+
+/* Ajuste para pantallas pequeñas (Móvil) */
+@media (max-width: 768px) {
+    .sol-animado {
+        width: 60px;
+        height: 60px;
+        top: 20px;
+        right: 20px;
+    }
+}
+
+/* La animación que hace que crezca y brille más */
+@keyframes resplandorSol {
+    0% {
+        transform: scale(1);
+        opacity: 0.9;
+    }
+    100% {
+        transform: scale(1.15); /* Crece un poquito */
+        /* El brillo se hace más grande */
+        box-shadow: 0 0 40px rgba(255, 247, 0, 1), 
+                    0 0 80px rgba(255, 193, 7, 0.8);
+    }
 }
