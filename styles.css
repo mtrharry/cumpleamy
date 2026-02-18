@@ -238,52 +238,59 @@ p { font-family: Arial, sans-serif; margin-bottom: 8px; color: #666; font-size: 
 /* ... (Todo el CSS anterior hasta llegar a la sección de DECORACIÓN JURÁSICA) ... */
 
 /* --- CIERRE ÉPICO (Dinos + Tierra) --- */
+
 .decoracion-jurasica {
-  position: relative;
-  /* Aumentamos un poco la altura porque los dinos son más grandes */
-  height: 180px; 
-  width: 100%;
-  margin-top: auto; 
-  /* Ajuste para que los pies pisen la tierra */
-  margin-bottom: -35px; 
-  z-index: 5;
-  pointer-events: none;
+    position: relative;
+    height: 140px; 
+    width: 100%;
+    margin-top: auto; 
+    /* Ajuste para que los pies pisen la tierra en MÓVIL */
+    margin-bottom: -65px; /* Aumentamos el margen negativo para bajar todo el contenedor */
+    z-index: 5;
+    pointer-events: none;
 }
 
 .deco-elemento {
     position: absolute;
-    bottom: 0;
+    /* Ajuste para que los elementos bajen más en MÓVIL */
+    bottom: -20px; /* Un valor negativo los baja respecto a su contenedor */
 }
 
 /* ESTILOS BASE PARA AMBOS DINOS */
 .dino {
-    /* TAMAÑO MÁS GRANDE (Antes era 140px) */
-    width: 180px; 
-    
-    bottom: -15px; /* Ajuste para pisar el pasto */
+    width: 150px; /* Un poco más pequeños en móvil */
     top: auto;
     z-index: 2;
+    /* Ajuste específico para los dinos en MÓVIL */
+    bottom: -35px; /* Los bajamos más para que sus pies toquen la tierra */
 }
 
-/* Posición Dino 1 (Original) */
 .dino-izq {
-    left: 50%;
-    /* Lo movemos a la izquierda y si es necesario lo volteamos para que mire al otro */
-    transform: translateX(-110%) scaleX(1); 
+    left: 35%; /* Ajustado para móvil */
+    transform: translateX(-100%) scaleX(1); 
 }
 
-/* Posición Dino 2 (Nuevo) */
+/* Posición Dino 2 (Nuevo - Derecha) */
 .dino-der {
-    left: 50%;
-    /* Lo movemos a la derecha. Si tu imagen mira a la izq, usa scaleX(-1) para voltearlo */
-    transform: translateX(10%) scaleX(-1); 
+    left: 65%; /* Ajustado para móvil */
+    transform: translateX(0%) scaleX(-1); 
 }
-
 
 /* Plantas */
-.planta-container { position: absolute; bottom: 0; width: 0; height: 0; z-index: 3; }
+.planta-container { 
+    position: absolute; 
+    width: 0; 
+    height: 0; 
+    z-index: 3;
+    /* Ajuste específico para las plantas en MÓVIL */
+    bottom: -25px; /* Las bajamos para que nazcan de la tierra */
+    transform: scale(0.8); /* Un poco más pequeñas en móvil */
+}
 .planta-izq { left: 5%; }
 .planta-der { right: 5%; }
+
+.tierra { width: 100%; margin-top: 0; line-height: 0; position: relative; z-index: 4;}
+.tierra img { width: 100%; display: block; }
 
 /* ... (resto del CSS de la tierra y plantas JS igual) ... */
 
@@ -328,5 +335,159 @@ p { font-family: Arial, sans-serif; margin-bottom: 8px; color: #666; font-size: 
   .planta-container { 
     transform: scale(1); 
     bottom: -20px; /* Bajamos también las plantas */
+  }
+}/* --- CUENTA REGRESIVA --- */
+.contador-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.caja-tiempo {
+    background: #fff;
+    border: 2px solid #2da6c4; /* Color cielo */
+    border-radius: 10px;
+    padding: 8px 5px;
+    min-width: 55px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 0 #1e86a1; /* Sombra sólida */
+}
+
+.numero {
+    font-size: 1.4em;
+    color: #ff6b6b; /* Color principal */
+    font-weight: bold;
+    line-height: 1;
+}
+
+.texto {
+    font-size: 0.6em;
+    color: #888;
+    text-transform: uppercase;
+    margin-top: 4px;
+    font-family: Arial, sans-serif;
+}
+
+/* --- BOTONES --- */
+/* Estilo base para links que parecen botones */
+a.btn-confirmar, a.btn-ubicacion {
+    display: inline-block;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-size: 1.1em;
+    font-family: 'Fredoka One', cursive;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+/* Botón Mapa (Azul) */
+.btn-ubicacion {
+    background-color: #2da6c4;
+    color: white;
+    box-shadow: 0 4px 0 #1e86a1;
+    margin-bottom: 20px;
+}
+.btn-ubicacion:active {
+    transform: translateY(4px);
+    box-shadow: none;
+}
+
+/* Actualización Botón Confirmar (Rojo) */
+.btn-confirmar {
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    box-shadow: 0 4px 0 #d43f3f;
+    margin-bottom: 40px; /* Espacio extra al final */
+}
+.btn-confirmar:active {
+    transform: translateY(4px);
+    box-shadow: none;
+}/* --- FORMULARIO GOOGLE SHEETS --- */
+.formulario-dino {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 300px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 20px;
+    border-radius: 15px;
+    border: 2px dashed #2da6c4;
+}
+
+.input-group input, 
+.input-group select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 2px solid #ccc;
+    font-family: 'Fredoka One', cursive; /* Misma fuente del sitio */
+    color: #5d4037;
+    background: white;
+    font-size: 0.9em;
+    outline: none;
+}
+
+.input-group input:focus, 
+.input-group select:focus {
+    border-color: #ff6b6b;
+}
+
+/* Ajuste del botón enviar para que encaje en el form */
+.formulario-dino .btn-confirmar {
+    width: 100%;
+    margin: 10px 0 0 0;
+    font-size: 1em;
+}
+/* ========================================= */
+/* MODO PC / TABLET (Responsive)       */
+/* ========================================= */
+
+@media (min-width: 768px) {
+  
+  /* 1. El cielo crece */
+  .cielo {
+    max-width: 900px; 
+    height: 95vh;
+  }
+
+  /* 2. Galería más grande */
+  .galeria-carrusel img {
+    flex: 0 0 40%; 
+    height: 300px;
+  }
+  
+  .nav-btn { display: block; } /* Mostrar botones en PC */
+
+  /* 3. AJUSTE DE LA ESCENA JURÁSICA EN PC */
+  .decoracion-jurasica {
+    height: 250px; /* Más altura para acomodar dinos grandes */
+    margin-bottom: -90px; /* Ajuste para PC */
+  }
+  
+  .deco-elemento {
+      bottom: 0; /* Restauramos el bottom base en PC */
+  }
+
+  /* 4. DINOS MÁS ABAJO (Enterrados en el pasto) EN PC */
+  .dino {
+    width: 280px; /* Dinos grandes en PC */
+    bottom: -95px; /* Los bajamos para que pisen bien la tierra en PC */
+  }
+
+  /* Posiciones para PC */
+  .dino-izq { left: 45%; transform: translateX(-110%) scaleX(1); }
+  .dino-der { left: 55%; transform: translateX(10%) scaleX(-1); }
+
+
+  /* 5. PLANTAS MÁS ABAJO EN PC */
+  .planta-container { 
+    transform: scale(1.5); /* Plantas grandes en PC */
+    bottom: -30px; /* Bajamos las plantas en PC */
   }
 }

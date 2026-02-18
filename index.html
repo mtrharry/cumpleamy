@@ -49,12 +49,36 @@
         </section>
 
         <section>
+          <h3>¿FALTA MUCHO?</h3>
+          <div id="cuenta-regresiva" class="contador-wrapper">
+              <div class="caja-tiempo">
+                  <span id="dias" class="numero">00</span>
+                  <span class="texto">Días</span>
+              </div>
+              <div class="caja-tiempo">
+                  <span id="horas" class="numero">00</span>
+                  <span class="texto">Hs</span>
+              </div>
+              <div class="caja-tiempo">
+                  <span id="minutos" class="numero">00</span>
+                  <span class="texto">Min</span>
+              </div>
+              <div class="caja-tiempo">
+                  <span id="segundos" class="numero">00</span>
+                  <span class="texto">Seg</span>
+              </div>
+          </div>
+        </section>
+
+        <section>
           <h3>¿CUÁNDO?</h3>
-          <p>sabado, 21 de Febrero</p>
-          <p class="dato-pendiente">Hora por confirmar</p>
+          <p>Sábado, 21 de Febrero</p>
+          <p>15:00 hrs (Ejemplo)</p> <h3>¿DÓNDE?</h3>
+          <p>La cueva de los Dinos</p>
           
-          <h3>¿DÓNDE?</h3>
-          <p class="dato-pendiente">Lugar por confirmar</p>
+          <a href="https://maps.app.goo.gl/xNfg2puQDmT4rv8J8" target="_blank" class="btn-ubicacion">
+             📍 Ver Ubicación
+          </a>
         </section>
 
         <section>
@@ -62,8 +86,31 @@
           <p>Tu presencia es mi mejor regalo</p>
         </section>
 
-        <section>
-          <button class="btn-confirmar">Confirmar Asistencia</button>
+        <form id="form-confirmacion" class="formulario-dino">
+
+            <div class="input-group">
+                <label style="display:block; margin-bottom:5px; color:#5d4037; font-size:0.9em;">Nombre del Adulto Acompañante:</label>
+                <input type="text" name="Adulto/s Acompañante/s" placeholder="Nombre del Papá, Mamá, Tía..." required>
+            </div>
+
+            <div class="input-group">
+                <label style="display:block; margin-bottom:5px; color:#5d4037; font-size:0.9em;">Nombre del Hijo/a (Invitado):</label>
+                <input type="text" name="Nombre Niño" placeholder="Ej: Amy Sophia" required>
+            </div>
+
+            <div class="input-group">
+                <label style="display:block; margin-bottom:5px; color:#5d4037; font-size:0.9em;">Teléfono:</label>
+                <input type="tel" name="Telefono" placeholder="WhatsApp de contacto" required>
+            </div>
+
+            <button type="submit" class="btn-confirmar">¡Confirmar Asistencia!</button>
+        </form>
+
+        <div id="mensaje-exito" style="display:none; margin-top:20px;">
+            <h3 style="color:#2da6c4;">¡Confirmado! 🦕</h3>
+            <p>Gracias por confirmar.</p>
+        </div>
+
         </section>
 
       </div> 
